@@ -10,16 +10,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --blue:#82C3DD;   /* primario */
+      --blue:#82C3DD;   /* primario celeste */
       --blue-700:#6CAECC;
-      --green:#90B799;  /* secundario */
-      --lilac:#CBB7F5;  /* premium */
-      --yellow:#F5DE95; /* gamificación */
+      --mint:#90B799;   /* verde menta (acento) */
+      --yellow:#F5DE95; /* amarillo suave (acento) */
       --cream:#F3F0EB;  /* fondo */
       --ink:#34495E;    /* texto */
-      --muted:#7B8A97;
+      --muted:#7B8A97;  /* texto secundario */
       --radius:16px;
       --shadow:0 10px 25px rgba(0,0,0,.08);
+      --shadow-lg:0 14px 34px rgba(0,0,0,.12);
       --container:1100px;
     }
     *,*::before,*::after{box-sizing:border-box}
@@ -32,7 +32,7 @@
     header{position:sticky;top:0;z-index:50;background:rgba(243,240,235,.8);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid #eceae6}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
     .logo{display:flex;gap:10px;align-items:center;font-family:Poppins,sans-serif;font-weight:700}
-    .logo svg{width:28px;height:28px;color:var(--blue)}
+    .logo img{height:50px}
     .nav a{font-weight:600;color:var(--ink);text-decoration:none;margin-left:16px}
     .nav .cta{display:none}
     @media(min-width:860px){.nav .cta{display:inline-flex}}
@@ -40,7 +40,6 @@
     /* Hero */
     .hero{position:relative;overflow:hidden}
     .hero__bg{position:absolute;inset:0;background:linear-gradient(135deg,#ffffff 0%, #f9f7f4 50%, #f3efe9 100%);pointer-events:none}
-    .hero__wave{position:absolute;bottom:-1px;left:0;right:0;height:80px;background:linear-gradient(to bottom,#f3efe9,transparent)}
     .hero__content{position:relative;padding:72px 0 40px}
     .title{font-family:Poppins,sans-serif;font-size:clamp(30px,5.6vw,52px);line-height:1.1;margin:0}
     .subtitle{font-size:clamp(16px,3.2vw,19px);color:var(--muted);margin:12px 0 22px}
@@ -48,15 +47,13 @@
     .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid #e7e5e0;color:var(--muted);font-size:12px}
     .hero__card{background:#fff;border:1px solid #ececec;border-radius:24px;padding:14px;box-shadow:var(--shadow)}
 
-    /* Buttons */
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:14px;border:0;font-weight:700;text-decoration:none;cursor:pointer}
+    /* Buttons (+ micro-animación) */
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:14px;border:0;font-weight:700;text-decoration:none;cursor:pointer;transform:translateZ(0);transition:transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease}
     .btn svg{width:18px;height:18px}
     .btn--primary{background:var(--blue);color:#fff;box-shadow:var(--shadow)}
-    .btn--primary:hover{background:var(--blue-700)}
+    .btn--primary:hover{background:var(--blue-700);transform:scale(1.03);box-shadow:var(--shadow-lg)}
     .btn--secondary{background:#fff;color:var(--blue);border:2px solid var(--blue)}
-    .btn--secondary:hover{background:var(--blue);color:#fff}
-    .btn--premium{background:var(--lilac);color:var(--ink)}
-    .btn--game{background:var(--yellow);color:var(--ink)}
+    .btn--secondary:hover{background:var(--blue);color:#fff;transform:scale(1.03)}
 
     /* Sections */
     .section{padding:56px 0}
@@ -66,13 +63,26 @@
     @media(min-width:760px){.grid-2{grid-template-columns:repeat(2,1fr)}}
     @media(min-width:980px){.grid-3{grid-template-columns:repeat(3,1fr)}}
 
-    .card{background:#fff;border:1px solid #ececec;border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+    .card{background:#fff;border:1px solid #ececec;border-radius:18px;padding:20px;box-shadow:var(--shadow);transition:transform .18s ease, box-shadow .18s ease}
     .card h3{margin:6px 0;font-family:Poppins,sans-serif}
+
+    /* Íconos minimal (usaremos emoji dentro de un círculo suave) */
+    .icon-circle{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:#fff;border:1px solid #e7e5e0;box-shadow:0 6px 16px rgba(0,0,0,.06);font-size:22px}
+
+    /* Acentos de color en palabras clave */
+    .accent-mint{background:rgba(144,183,153,.22);padding:0 .3em;border-radius:.35em}
+    .accent-yellow{background:rgba(245,222,149,.6);padding:0 .3em;border-radius:.35em}
 
     /* Plans */
     .plans .price{font-family:Poppins,sans-serif;font-size:28px;margin:6px 0}
-    .plans .popular{border:2px solid var(--blue)}
-    .plans .badge{background:var(--blue);color:#fff;border:0}
+    .plan-card{transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+    .plan-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+    .recommended{border:2px solid var(--blue);background:linear-gradient(180deg, rgba(130,195,221,.10), #fff 40%);}
+    .recommended .badge{background:var(--blue);color:#fff;border:0}
+
+    /* Trustbar */
+    .trustbar{margin-top:18px;background:#fff;border:1px solid #ececec;border-radius:14px;padding:16px;display:grid;gap:6px;text-align:center;color:var(--ink);box-shadow:var(--shadow)}
+    .trustbar b{color:var(--ink)}
 
     /* Footer */
     footer{padding:36px 0;border-top:1px solid #eceae6;color:var(--muted);font-size:14px}
@@ -82,9 +92,12 @@
 <body>
   <header>
     <div class="container nav">
-    <div class="logo">
-  <img src="logo-ecosmile.png" alt="Logo Ecosmile" style="height:230px;" />
-</div>
+      <div class="logo">
+        <!-- Reemplaza el src por tu logo si quieres -->
+        <img src="logo-ecosmile.png" alt="Logo Ecosmile" />
+      </div>
+      <a href="#planes" class="btn btn--primary cta">Suscribirme</a>
+    </div>
   </header>
 
   <section class="hero">
@@ -92,11 +105,12 @@
     <div class="container hero__content grid grid-2">
       <div>
         <h1 class="title">Tu hábito, tu sonrisa</h1>
-        <p class="subtitle">La suscripción a la <b>app Ecosmile</b> que motiva hábitos dentales con juegos y puntos. <b>Recibe un kit de regalo mensual</b> para mantener la motivación.</p>
+        <p class="subtitle">La suscripción a la <b>app Ecosmile</b> que motiva hábitos dentales con juegos y puntos. <span class="accent-mint"><b>Recibe un kit de regalo mensual</b></span> para mantener la motivación.</p>
         <p>
-         <a href="#planes" class="btn btn--primary">Suscribirme ahora
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-</a>
+          <a href="#planes" class="btn btn--primary">Suscribirme ahora
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <!-- Mismo colorimetría que el primario, como pediste -->
           <a href="#como" class="btn btn--primary">Cómo funciona</a>
         </p>
         <div class="kpis">
@@ -109,7 +123,6 @@
         <img alt="Mockup de la app Ecosmile" src="https://dummyimage.com/900x560/f8f6f3/82c3dd.png&text=Mockup+App+Ecosmile" />
       </div>
     </div>
-    <div class="hero__wave"></div>
   </section>
 
   <main>
@@ -117,19 +130,19 @@
     <section class="section">
       <div class="container grid grid-3">
         <div class="card">
-          <div class="badge" style="background:var(--blue);color:#fff;border:0">✓</div>
+          <div class="icon-circle" style="background:#fff">✓</div>
           <h3>Aprende y juega</h3>
           <p>Retos diarios, rachas e insignias para motivar a toda la familia.</p>
         </div>
         <div class="card">
-          <div class="badge" style="background:var(--green);color:#fff;border:0">🗓</div>
+          <div class="icon-circle">🗓</div>
           <h3>Organízate</h3>
           <p>Recordatorios de cepillado, cambios de cepillo y citas.</p>
         </div>
         <div class="card">
-          <div class="badge" style="background:var(--yellow);color:#000;border:0">★</div>
+          <div class="icon-circle" style="background:#fff">★</div>
           <h3>Premios motivadores</h3>
-         <p>Gana puntos y revisa nuestro catálogo de premios!</p>
+          <p><span class="accent-yellow">Gana puntos</span> y revisa nuestro <b>catálogo de premios</b>!</p>
         </div>
       </div>
     </section>
@@ -140,68 +153,67 @@
         <h2 class="title" style="font-size:32px">Cómo funciona</h2>
         <div class="grid grid-2">
           <div class="card">
-  <h3>1) Elige tu plan</h3>
-  <p>Únete al Team EcoSmile: individual, dúo, familiar o premium. Arma tu perfil y comienza a sumar sonrisas.</p>
-</div>
-
-<div class="card">
-  <h3>2) Vive la experiencia en la app</h3>
-  <p>Juegos, retos y recordatorios diarios para mantener tus hábitos. Gana puntos cada día (hasta 600 pts/mes).</p>
-</div>
-
-<div class="card">
-  <h3>3) Recibe tu kit exclusivo</h3>
-  <p>Cada mes te llega tu box EcoSmile con productos seleccionados + un cepillo nuevo cada 3 meses y extras sorpresa.</p>
-</div>
-
-<div class="card">
-  <h3>4) Canjea y celebra</h3>
-  <p>Transforma tus puntos en premios reales: desde básicos hasta cepillos eléctricos y juguetes. Puntos válidos por 12 meses.</p>
-</div>
-
+            <div class="icon-circle">🎯</div>
+            <h3>1) Elige tu plan</h3>
+            <p>Únete al <b>Team EcoSmile</b>: individual, dúo, familiar o premium. Arma tu perfil y comienza a sumar <span class="accent-mint">sonrisas</span>.</p>
+          </div>
+          <div class="card">
+            <div class="icon-circle">📱</div>
+            <h3>2) Vive la experiencia en la app</h3>
+            <p>Juegos, retos y recordatorios diarios para mantener tus hábitos. <span class="accent-yellow">Gana puntos</span> cada día (hasta 600 pts/mes).</p>
+          </div>
+          <div class="card">
+            <div class="icon-circle">📦</div>
+            <h3>3) Recibe tu kit exclusivo</h3>
+            <p>Cada mes te llega tu <b>box EcoSmile</b> con productos seleccionados + un <b>cepillo nuevo cada 3 meses</b> y <span class="accent-mint">extras sorpresa</span>.</p>
+          </div>
+          <div class="card">
+            <div class="icon-circle">🏆</div>
+            <h3>4) Canjea y celebra</h3>
+            <p>Transforma tus puntos en <b>premios reales</b>: desde básicos hasta cepillos eléctricos y juguetes. Puntos válidos por 12 meses.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Planes -->
+    <!-- Planes (Duo recomendado, sin Trio) -->
     <section id="planes" class="section">
       <div class="container">
         <h2 class="title" style="font-size:32px">Planes</h2>
         <div class="grid grid-2 plans">
-          <article class="card">
+          <article class="card plan-card">
             <span class="badge">1 perfil</span>
             <h3>Individual</h3>
             <p class="price">$8.990/mes</p>
-            <a href="#" class="btn btn--primary">Suscribirme</a>
+            <a href="#" class="btn btn--primary">Suscribirme ahora</a>
           </article>
 
-          <article class="card">
-            <span class="badge">2 perfiles</span>
+          <article class="card plan-card recommended">
+            <span class="badge">⭐ Recomendado</span>
             <h3>Duo</h3>
             <p class="price">$14.980/mes</p>
-            <a href="#" class="btn btn--primary">Elegir Duo</a>
+            <a href="#" class="btn btn--primary">Suscribirme ahora</a>
           </article>
 
-          <article class="card popular">
-            <span class="badge">⭐ Más popular</span>
-            <h3>Trio</h3>
-            <p class="price">$20.970/mes</p>
-            <a href="#" class="btn btn--primary">Elegir Trio</a>
-          </article>
-
-          <article class="card">
+          <article class="card plan-card">
             <span class="badge">4 perfiles</span>
             <h3>Familiar</h3>
             <p class="price">$25.960/mes</p>
-            <a href="#" class="btn btn--primary">Elegir Familiar</a>
+            <a href="#" class="btn btn--primary">Suscribirme ahora</a>
           </article>
 
-          <article class="card" style="border-color:#dac7f9">
-            <span class="badge" style="background:var(--lilac);color:var(--ink)">Premium</span>
+          <article class="card plan-card" style="border-color:#dcd3f5">
+            <span class="badge" style="background:#CBB7F5;color:#1b1f23;border:0">Premium</span>
             <h3>Premium (estatus)</h3>
             <p class="price">$12.990–14.990/mes</p>
-            <a href="#" class="btn btn--premium">Quiero Premium</a>
+            <a href="#" class="btn btn--secondary">Ver detalles</a>
           </article>
+        </div>
+
+        <!-- Trust / credibilidad -->
+        <div class="trustbar">
+          <div><b>+300 familias</b> ya se unieron al <b>Team EcoSmile</b> 🚀</div>
+          <div>El <b>90%</b> de nuestros usuarios mejoró sus hábitos de cepillado en <b>3 meses</b>.</div>
         </div>
       </div>
     </section>
